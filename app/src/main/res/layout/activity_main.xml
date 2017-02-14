@@ -41,7 +41,8 @@
         android:layout_marginStart="29dp"
         android:layout_alignTop="@+id/question"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/radioGroupButtons">
 
         <RadioButton
             android:text="7"

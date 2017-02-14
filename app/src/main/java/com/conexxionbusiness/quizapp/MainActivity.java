@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private int radioButtonId;
     private RadioButton radioButtonChecked;
     private String question;
+    private RadioGroup radioGroupButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mOption3View = (TextView) findViewById(R.id.option3);
         mSubmitAnswer = (Button) findViewById(R.id.submitAnswer);
         mRelativeLayoutActivityMain = (RelativeLayout) findViewById(R.id.relativeLayoutActivityMain);
+        radioGroupButtons = (RadioGroup) findViewById(R.id.radioGroupButtons);
         // First question....
         question = mQuestionBank.getQuestion();
         mOptions = mQuestionBank.getOptions();mQuestionView.setText(question);
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (answer.equals("")) {
                     // Send error message in a toast here
+                    sendToast("Select an option please.");
                     return;
                 }
                 checkAnswer(answer);
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 answer = "";
                 radioButtonChecked = (RadioButton) findViewById(radioButtonId);
                 radioButtonChecked.setChecked(false);
+                radioGroupButtons.clearCheck();
             }
         };
 
@@ -98,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                     answer = (String) mOption3View.getText();
                     radioButtonId = view.getId();
                     break;
+            default:
+                ((RadioGroup) view).clearCheck();
+                break;
         }
     }
 
@@ -105,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
     private void checkAnswer(String answer) {
         String result;
         if (answer.equals(mQuestionBank.getCorrectAnswer())) {
-            result = "Correct Answer!";
+            result = "* Correct Answer!";
         } else {
-            result = "Incorrect Answer.";
+            result = "X Incorrect Answer.";
         }
 
         // Send success/failure message in a toast here
